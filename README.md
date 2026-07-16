@@ -1,10 +1,10 @@
 # Desafio Técnico — Subiter
 
-Resolução da prova técnica para a vaga de Desenvolvedor(a) Pleno C++ e Flutter na Subiter.
+Repositório com as respostas da prova técnica para a vaga de Desenvolvedor(a) Pleno C++ e Flutter. Cada questão está organizada em seu próprio arquivo ou pasta para facilitar a navegação.
 
-## Conteúdo
+## Onde encontrar cada questão
 
-- **Questão 1** — Modelagem de classes em C++/Qt para inspeções industriais (termográfica e ultrassom), usando herança e polimorfismo.
-- **Questão 2** — Descrição da arquitetura de uma tela Flutter consumindo API REST (separação de camadas, gerenciamento de estado, tratamento de erros).
-- **Questão 3** — Programa em C++ para cadastro e listagem de equipamentos.
-- **Questão 4** — Tela em Flutter para cadastro de atividade.
+- **Questão 1** — Modelagem de classes em C++/Qt → `questao1_modelagem_inspecoes.md`
+- **Questão 2** — Arquitetura de tela Flutter consumindo API REST → `questao2_tela_listagem_api_rest.md`
+- **Questão 3** — Programa C++ de cadastro de equipamentos → `questao3_cadastro_equipamentos.cpp`
+- **Questão 4** — Tela Flutter de cadastro de atividade → `cadastro_atividade/` — toda a implementação está em `lib/main.dart`. Daria para separar em arquivos e camadas distintas, mas dado que a funcionalidade pedida é simples, optei por concentrar tudo na main para facilitar a leitura da entrega.
