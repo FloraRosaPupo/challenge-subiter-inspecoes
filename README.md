@@ -8,3 +8,17 @@ Repositório com as respostas da prova técnica para a vaga de Desenvolvedor(a) 
 - **Questão 2** — Arquitetura de tela Flutter consumindo API REST → `questao2_tela_listagem_api_rest.md`
 - **Questão 3** — Programa C++ de cadastro de equipamentos → `questao3_cadastro_equipamentos.cpp`
 - **Questão 4** — Tela Flutter de cadastro de atividade → `cadastro_atividade/` — toda a implementação está em `lib/main.dart`. Daria para separar em arquivos e camadas distintas, mas dado que a funcionalidade pedida é simples, optei por concentrar tudo na main para facilitar a leitura da entrega.
+
+
+## Desenvolvimento e validação
+
+O aplicativo está em `cadastro_atividade`. Use Flutter 3.41.1. Na pasta do aplicativo, execute:
+
+```sh
+flutter pub get
+flutter analyze --no-fatal-infos --no-fatal-warnings
+flutter test
+flutter run
+```
+
+A CI valida análise e testes em pushes e pull requests. Serviços externos precisam de configuração própria.
