@@ -22,3 +22,20 @@ flutter run
 ```
 
 A CI valida análise e testes em pushes e pull requests. Serviços externos precisam de configuração própria.
+
+
+## Stack e bibliotecas
+
+C++17, Python para testes de processo e Flutter/Dart.
+
+
+## Licença
+
+Não há licença de distribuição definida neste repositório. Os direitos de terceiros e as atribuições existentes devem ser respeitados; esta revisão não concede permissão de redistribuição.
+
+
+## Organização e manutenção
+
+Questões do desafio continuam separadas por diretório/arquivo para preservar a avaliação original. Não são features de um produto único. A entrada de console é validada antes do cadastro; os testes verificam o processo real.
+
+Veja [a revisão de desenvolvimento](docs/REVISAO.md) para decisões, testes e limites, e [o guia de contribuição](CONTRIBUTING.md) para o fluxo de manutenção.
