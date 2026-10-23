@@ -1,0 +1,11 @@
+name: C++ CI
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: g++ -std=c++17 -Wall -Wextra -Werror questao3_cadastro_equipamentos.cpp -o cadastro
+      - run: python3 -m unittest discover -s tests -v

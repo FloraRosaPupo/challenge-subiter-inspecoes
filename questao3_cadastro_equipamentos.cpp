@@ -1,75 +1,70 @@
+#include <array>
 #include <iostream>
+#include <sstream>
 #include <string>
-using namespace std;
 
 struct Equipamento {
-    string nome;
-    string codigo;
-    int id;
-    string descricao;
+    std::string nome;
+    std::string codigo;
+    int id = 0;
+    std::string descricao;
 };
 
-void cadastrar(Equipamento &eq, int numero) {
-    cout << "\n=== Cadastro do Equipamento " << numero << " ===" << endl;
-    cout << "Nome: ";
-    cin >> eq.nome;
-    cout << "Codigo: ";
-    cin >> eq.codigo;
-    cout << "ID: ";
-    cin >> eq.id;
-    cout << "Descricao: ";
-    cin >> eq.descricao;
+bool lerInteiro(std::istream& entrada, std::ostream& saida, const std::string& rotulo, int& valor) {
+    std::string linha;
+    while (saida << rotulo, std::getline(entrada, linha)) {
+        std::istringstream parser(linha);
+        if (parser >> valor) {
+            parser >> std::ws;
+            if (parser.eof()) return true;
+        }
+        saida << "Digite um numero inteiro valido.\n";
+    }
+    return false;
 }
 
-void exibir(Equipamento equipamentos[], int quantidade) {
-    if (quantidade == 0) {
-        cout << "\nNenhum equipamento cadastrado ainda." << endl;
-        return;
+bool lerTexto(std::istream& entrada, std::ostream& saida, const std::string& rotulo, std::string& valor) {
+    while (saida << rotulo, std::getline(entrada, valor)) {
+        const auto inicio=valor.find_first_not_of(" \t\r");
+        if (inicio!=std::string::npos) {
+            valor=valor.substr(inicio,valor.find_last_not_of(" \t\r")-inicio+1);
+            return true;
+        }
+        saida << "O campo nao pode ficar vazio.\n";
     }
-    cout << "\n===== Equipamentos Cadastrados =====" << endl;
-    for (int i = 0; i < quantidade; i++) {
-        cout << "\nEquipamento " << i + 1 << ":" << endl;
-        cout << "Nome: "      << equipamentos[i].nome      << endl;
-        cout << "Codigo: "    << equipamentos[i].codigo    << endl;
-        cout << "ID: "        << equipamentos[i].id        << endl;
-        cout << "Descricao: " << equipamentos[i].descricao << endl;
-    }
+    return false;
+}
+
+bool cadastrar(Equipamento& eq, std::istream& entrada=std::cin, std::ostream& saida=std::cout) {
+    return lerTexto(entrada,saida,"Nome: ",eq.nome) &&
+           lerTexto(entrada,saida,"Codigo: ",eq.codigo) &&
+           lerInteiro(entrada,saida,"ID: ",eq.id) &&
+           lerTexto(entrada,saida,"Descricao: ",eq.descricao);
 }
 
 int main() {
-    Equipamento equipamentos[3];
-    int quantidade = 0;
-    int opcao;
-
-    do {
-        cout << "\n===== MENU =====" << endl;
-        cout << "1 - Cadastrar equipamento (" << quantidade << "/3)" << endl;
-        cout << "2 - Exibir equipamentos" << endl;
-        cout << "0 - Sair" << endl;
-        cout << "Opcao: ";
-        cin >> opcao;
-
-        switch (opcao) {
-            case 1:
-                if (quantidade >= 3) {
-                    cout << "Limite de 3 equipamentos atingido!" << endl;
-                } else {
-                    cadastrar(equipamentos[quantidade], quantidade + 1);
-                    quantidade++;
-                    cout << "Equipamento cadastrado com sucesso!" << endl;
-                }
-                break;
-            case 2:
-                exibir(equipamentos, quantidade);
-                break;
-            case 0:
-                cout << "Encerrando..." << endl;
-                break;
-            default:
-                cout << "Opcao invalida!" << endl;
-        }
-
-    } while (opcao != 0);
-
+    std::array<Equipamento,3> equipamentos{};
+    std::size_t quantidade=0;
+    int opcao=0;
+    while (lerInteiro(std::cin,std::cout,"\n1 - Cadastrar\n2 - Exibir\n0 - Sair\nOpcao: ",opcao)) {
+        if (opcao==0) break;
+        if (opcao==1) {
+            if (quantidade==equipamentos.size()) {
+                std::cout << "Limite de 3 equipamentos atingido!\n";
+                continue;
+            }
+            Equipamento novo;
+            if (!cadastrar(novo)) break;
+            equipamentos[quantidade++]=novo;
+            std::cout << "Equipamento cadastrado com sucesso!\n";
+        } else if (opcao==2) {
+            if (quantidade==0) std::cout << "Nenhum equipamento cadastrado ainda.\n";
+            for (std::size_t i=0;i<quantidade;++i) {
+                const auto& eq=equipamentos[i];
+                std::cout << "Nome: " << eq.nome << "\nCodigo: " << eq.codigo
+                          << "\nID: " << eq.id << "\nDescricao: " << eq.descricao << '\n';
+            }
+        } else std::cout << "Opcao invalida!\n";
+    }
     return 0;
 }
